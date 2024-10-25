@@ -14,7 +14,7 @@ Mình support Project bạn: [Trương Cao Vũ](https://www.facebook.com/profile
 
 ### Bảng 2 - Kết quả các Chỉ Số từ các giai đoạn Huấn Luyện và Kiểm Tra
 
-| **Chỉ Số**              | **Validation - trước huấn luyện** | **Validation - 3 epochs - Yolov8s - No Augmentation** | **Validation - 15 epochs - Yolov8n - No Augmentation** | **Test - 15 epochs - Yolov8n - No Augmentation** | **Validation - 30 epochs - Yolov8m - withAug** | **Test - 30 epochs - Yolov8m - withAug** |
+| **Chỉ Số**              | **Validation - trước huấn luyện** | **Validation - 3 epochs - Yolov8n - No Augmentation** | **Validation - 15 epochs - Yolov8n - No Augmentation** | **Test - 15 epochs - Yolov8n - No Augmentation** | **Validation - 30 epochs - Yolov8m - withAug** | **Test - 30 epochs - Yolov8m - withAug** |
 |-------------------------|-----------------------------------|------------------------------------------------------|-------------------------------------------------------|-------------------------------------------------|------------------------------------------------|------------------------------------------|
 | Time Training/Inference | N/A                               | 0.08 giờ                                             | 0.4 giờ                                               | 0.01 giờ                                         | 1.5 giờ                                        | 0.02 giờ                                     |
 | Precision               | 0.526                             | 0.808                                                | 0.865                                                 | 0.904                                           | 0.912                                          | 0.889                                        |

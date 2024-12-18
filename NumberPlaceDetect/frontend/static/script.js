@@ -40,12 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // Get the processed image blob
-            const blob = await response.blob();
-            const imageUrl = URL.createObjectURL(blob);
-            outputImage.src = imageUrl;
+            const data = await response.json();
             
-            statusMessage.textContent = 'Detection completed successfully!';
+            // Display the processed image using base64 data
+            outputImage.src = `data:image/jpeg;base64,${data.image}`;
+            
+            // Display detection result
+            statusMessage.textContent = `Detection result: ${data.plate_text}`;
 
         } catch (error) {
             console.error('Error:', error);

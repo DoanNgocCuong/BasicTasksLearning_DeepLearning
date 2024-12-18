@@ -14,3 +14,17 @@ project/
 ├── README.md                      # Hướng dẫn sử dụng
 
 ```
+
+
+```
+NumberPlaceDetect/
+├── backend/
+│   ├── app.py
+│   ├── detection.py
+│   ├── recognition.py
+│   └── model/
+│       └── best.pt
+└── frontend/
+    └── ...
+
+```

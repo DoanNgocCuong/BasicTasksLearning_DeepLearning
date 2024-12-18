@@ -1,13 +1,13 @@
-from flask import Flask, request, jsonify, send_file, Response
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
 import numpy as np
-from ultralytics import YOLO
-import os
 import sys
 import logging
+import base64
 from io import BytesIO
-from pathlib import Path
+from detection import LicensePlateDetector
+from OCR import process_license_plate
 
 # Set console output encoding to UTF-8
 sys.stdout.reconfigure(encoding='utf-8')
@@ -21,7 +21,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-# Configure CORS to allow all origins
 CORS(app, resources={
     r"/*": {
         "origins": "*",
@@ -31,9 +30,8 @@ CORS(app, resources={
     }
 })
 
-# Initialize YOLO model
-SCRIPTS_FOLDER = Path(__file__).parent
-model = YOLO(SCRIPTS_FOLDER / "model/best.pt")
+# Initialize detector only
+detector = LicensePlateDetector()
 
 @app.route('/detect', methods=['POST'])
 def detect_license_plate():
@@ -42,32 +40,26 @@ def detect_license_plate():
         
         # Get image file from request
         file = request.files['image']
-        
-        # Read image
         nparr = np.fromstring(file.read(), np.uint8)
         cv_image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         
-        logger.info("Running YOLO detection")
-        # Run YOLO detection
-        results = model(cv_image, conf=0.2, verbose=False)
+        # Detect license plates
+        detections = detector.detect(cv_image)
         
-        # Draw bounding boxes
-        for result in results[0].boxes.data:
-            x1, y1, x2, y2, conf, cls = result
-            cv2.rectangle(cv_image, 
-                         (int(x1), int(y1)), 
-                         (int(x2), int(y2)), 
-                         (0, 255, 0), 2)
+        # Process OCR directly using process_license_plate
+        processed_image, plate_text = process_license_plate(cv_image, detections)
         
         # Convert processed image to bytes
-        _, img_encoded = cv2.imencode('.jpg', cv_image)
-        img_bytes = BytesIO(img_encoded.tobytes())
+        _, img_encoded = cv2.imencode('.jpg', processed_image)
         
-        logger.info("Sending processed image")
-        return send_file(img_bytes, mimetype='image/jpeg')
+        logger.info("Sending processed image and plate text")
+        return jsonify({
+            'plate_text': plate_text,
+            'image': base64.b64encode(img_encoded.tobytes()).decode('utf-8')
+        })
         
     except Exception as e:
-        logger.error(f"Error during detection: {str(e)}")
+        logger.error(f"Error during processing: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':

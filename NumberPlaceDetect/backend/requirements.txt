@@ -3,3 +3,5 @@ ultralytics
 opencv-python
 numpy
 flask-cors
+easyocr
+torch

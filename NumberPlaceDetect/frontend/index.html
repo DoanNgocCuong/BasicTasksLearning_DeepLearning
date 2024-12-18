@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>License Plate Detection</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>License Plate Detection</h1>
+        
+        <form id="upload-form">
+            <input type="file" id="file" accept="image/*" required>
+            <button type="submit">Upload & Detect</button>
+        </form>
+        
+        <div id="status-message"></div>
+        
+        <div class="results">
+            <div class="image-container">
+                <h3>Original Image</h3>
+                <img id="input-image" src="" alt="Input Image">
+            </div>
+            
+            <div class="image-container">
+                <h3>Detected Image</h3>
+                <img id="output-image" src="" alt="Output Image">
+            </div>
+        </div>
+    </div>
+    
+    <script src="static/script.js"></script>
+</body>
+</html>

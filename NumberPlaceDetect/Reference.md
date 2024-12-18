@@ -1,0 +1,2 @@
+1. Xem cách đóng gói backend, với các kiểu của debug khi run được cả dev và cả docker: 
+- https://github.com/DoanNgocCuong/MiniProd_Web6_UIChatbot_throughCallApiDIFY/blob/main/deploy1.3_streamingConfig/backend/app.py

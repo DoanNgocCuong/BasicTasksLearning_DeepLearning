@@ -2,3 +2,5 @@
 artifacts/
 wandb/
 submit/
+
+# Python cache files
